@@ -1,0 +1,46 @@
+import java.util.*;
+
+ class Graphs{
+
+
+    public static void dfs(int adjmatrix[][],int currentVertex,boolean visited[]){
+       
+       visited[currentVertex]=true;
+       System.out.print(currentVertex+ " ");
+
+       for(int i=0;i<adjmatrix.length;i++){
+
+       	  if(adjmatrix[currentVertex][i]==1 && visited[i]==false){
+              
+              dfs(adjmatrix,i,visited);
+
+       	  }
+       }
+
+    }
+    public static void DFS(int adjmatrix[][]){
+       
+       boolean visited[]=new boolean[adjmatrix.length];
+       dfs(adjmatrix,0,visited);
+    }
+	public static void main(String args[]){
+
+		Scanner sc=new Scanner(System.in);
+		int V=sc.nextInt();
+		int E=sc.nextInt();
+
+		int adjmatrix[][]=new int[V][V];
+
+
+		for(int i=0;i<E;i++){
+            int V1=sc.nextInt();
+			int V2=sc.nextInt();
+			adjmatrix[V1][V2]=1;
+            adjmatrix[V2][V1]=1;
+         }
+
+
+         DFS(adjmatrix);
+
+	}
+}
