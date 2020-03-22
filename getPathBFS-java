@@ -1,0 +1,80 @@
+import java.util.Scanner;
+import java.util.Queue;
+import java.util.LinkedList;
+import java.util.HashMap;
+import java.util.ArrayList;
+public class Solution {
+   
+    public static ArrayList<Integer> getPath(int adjMatrix[][],int start,int end,boolean visited[]){
+        Queue<Integer> pendingNodes=new LinkedList<>();
+        HashMap<Integer,Integer> map=new HashMap<>();
+         pendingNodes.add(start);
+        map.put(start,-1);
+        boolean pathfound=false;
+        visited[start]=true;
+        while(!pendingNodes.isEmpty()){
+            int currentIndex=pendingNodes.poll();
+            
+            for(int i=0;i<adjMatrix.length;i++){
+             
+                if(adjMatrix[currentIndex][i]==1 && !visited[i]){
+                      pendingNodes.add(i);
+                      visited[i]=true; 
+                      map.put(i,currentIndex);
+                    
+                      if(i==end){
+                          pathfound=true;
+                          break;
+                      }
+                }
+            }
+        }
+        
+        if(pathfound){
+            ArrayList<Integer> path=new ArrayList<>();
+         int currentVertex=end;
+            while(currentVertex!=-1){
+                path.add(currentVertex);
+                int parent=map.get(currentVertex);
+                
+                currentVertex=parent;
+                
+            }
+            
+            return path;
+            
+        }else{
+            return null;
+        }
+        
+    }
+	public static void main(String[] args) {
+		Scanner sc = new Scanner(System.in);
+		int V = sc.nextInt();
+		int E = sc.nextInt();
+        
+        int adjMatrix[][]=new int[V][V];
+        
+        for(int i=0;i<E;i++){
+            int V1=sc.nextInt();
+            int V2=sc.nextInt();
+            adjMatrix[V1][V2]=1;
+            adjMatrix[V2][V1]=1;
+        }
+        
+        
+        int start=sc.nextInt();
+        int end=sc.nextInt();
+        
+        boolean visited[]=new boolean[V];
+        
+        
+        ArrayList<Integer> ans=getPath(adjMatrix,start,end,visited);
+        if(ans!=null){
+        for(int i=0;i<ans.size();i++){
+            System.out.print(ans.get(i)+" ");
+        }    
+        }
+        
+	}
+}
