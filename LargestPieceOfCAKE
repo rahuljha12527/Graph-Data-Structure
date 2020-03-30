@@ -1,0 +1,59 @@
+import java.util.*;
+public class solution {
+    
+    int []xdir={0,0,-1,1};
+    int []ydir={1,-1,0,0};
+    int [][]visited;
+    
+  public int max(int a,int b){
+      
+      if(a>b){
+          return a;
+      }
+      
+      return b;
+  }  
+    
+   public int path_helper(String cake[],int i,int j,int n,char c){
+        
+        if(i>n || j>n){
+            return 0;
+        }
+        
+        visited[i][j]=1;
+        int count=1;
+        for(int k=0;k<4;k++){
+            int dx=i+xdir[k];
+            int dy=j+ydir[k];
+            
+            if(dx>=0 && dx<n &&dy>=0 && dy<n && cake[dx].charAt(dy)=='1' && visited[dx][dy]==0){
+                count+=path_helper(cake,dx,dy,n,c);
+                
+            }
+            
+        }
+        
+        return count;
+    }
+    
+    public int solve(int n,String cake[]) {
+       
+        visited=new int[n][n];
+        for(int i=0;i<n;i++){
+            Arrays.fill(visited[i],0);
+        }
+        
+        int result=0;
+        
+        for(int i=0;i<n;i++){
+            for(int j=0;j<n;j++){
+                if(cake[i].charAt(j)=='1'  && visited[i][j]==0){
+                    int ans=path_helper(cake,i,j,n,cake[i].charAt(j));
+                         
+                    result=max(result,ans);
+                }
+            }
+        }
+        return result;
+    }
+}
